@@ -1,7 +1,7 @@
-// Controllers são responsáveis por receber as requisições HTTP, processar os dados de entrada, 
-// chamar os casos de uso apropriados e retornar as respostas HTTP.
+// src/interfaces/controllers/UserController.ts
+
 import {Request, Response} from 'express';
-import { CreateUser } from '../../application/use_cases/CreateUser';
+import { CreateUser } from '../../application/use_cases/user/CreateUser';
 
 export class UserController {
     constructor(private createUser: CreateUser) {}

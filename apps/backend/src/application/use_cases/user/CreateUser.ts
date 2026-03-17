@@ -1,7 +1,9 @@
-//
-import { User } from "../../domain/entities/user"; 
-import { IUserRepository } from "../../domain/repositories/IUserRepository";
-import { CreateUserInputDTO, CreateUserOutputDTO } from "../dtos/CreateUserInputDTO";
+// src/application/use_cases/user/CreateUser.ts
+
+import { User } from "../../../domain/entities/User"; 
+import { IUserRepository } from "../../../domain/repositories/IUserRepository";
+import { CreateUserInputDTO, CreateUserOutputDTO } from "../../dtos/CreateUserDTO";
+import bcrypt from 'bcryptjs';
 
 export class CreateUser {
     constructor(private userRepository: IUserRepository) {}
@@ -12,9 +14,10 @@ export class CreateUser {
         if (existingUser) {
             throw new Error("User with this email already exists.");
         }
+        
+        const hashedPassword = await bcrypt.hash(input.password, 10);
 
-        // Criar um novo usuário
-        const user = new User("",input.name, input.email);
+        const user = new User("", input.name, input.email, hashedPassword ,input.role);
 
         // Salvar o usuário no repositório
         await this.userRepository.save(user);
@@ -23,6 +26,7 @@ export class CreateUser {
             id: user.getId(),
             name: user.getName(),
             email: user.getEmail(),
+            role: user.getRole(),
         };
     }
 }

@@ -1,0 +1,113 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Entidade de Usuário
+// Centraliza os dados de autenticação e o perfil de acesso (Role).
+model User {
+  id              String    @id @default(uuid())
+  name            String
+  email           String    @unique
+  password        String
+
+  // O SQLite não possui suporte nativo a Enums. Por isso, o campo role é mapeado como String.
+  // A validação dos valores aceitos (GERENTE, DESENVOLVEDOR, QA) é garantida pela camada de domínio da aplicação.  
+  role            String    @default("DESENVOLVEDOR")
+
+  // Relações (Um usuário pode ter vários projetos e chamados)
+  managedProjects Project[] @relation("ProjectManager")
+  memberProjects  Project[] @relation("ProjectMembers")
+  
+  // Relacionamentos com os chamados (abertura e atribuição) e com o histórico de comentários.
+  reportedTickets Ticket[]  @relation("TicketReporter")
+  assignedTickets Ticket[]  @relation("TicketAssignee")
+  comments        Comment[]
+}
+
+// Entidade de Projeto
+// Agrupa chamados e restringe o acesso aos membros associados.
+model Project {
+  id          String   @id @default(uuid())
+  name        String
+  description String
+  createdAt   DateTime @default(now())
+
+  // Relacionamento 1:N - Um projeto é gerenciado por exatamente um usuário (Gerente)
+  managerId   String
+  manager     User     @relation("ProjectManager", fields: [managerId], references: [id])
+
+  // Relacionamento M:N - Lista de membros (desenvolvedores/QAs) envolvidos no projeto. 
+  // O Prisma gerencia a tabela associativa de forma implícita.
+  members     User[]   @relation("ProjectMembers")
+  
+  // Relacionamento 1:N - Um projeto pode conter múltiplos chamados.
+  tickets     Ticket[]
+}
+
+// Entidade de Chamado (Ticket / Bug)
+// Entidade central do sistema, controlada por uma máquina de estados na camada de aplicação.
+model Ticket {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  // O campo status é armazenado como String devido à limitação do SQLite.
+  // O valor padrão inicial ao criar um chamado é sempre ABERTO.
+  status      String   @default("ABERTO") // Simulando o Enum com String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt // Atualizado automaticamente pelo Prisma a cada alteração no registro.
+
+  // Relacionamento obrigatório com o usuário que reportou o problema.
+  reporterId  String
+  reporter    User     @relation("TicketReporter", fields: [reporterId], references: [id])
+
+  // Associação obrigatória ao projeto em que o chamado foi aberto.
+  projectId   String
+  project     Project  @relation(fields: [projectId], references: [id])
+
+  // Relacionamento opcional com o desenvolvedor responsável por resolver o bug.
+  // Pode ser nulo caso o chamado ainda não tenha sido atribuído.
+  assigneeId  String?
+  assignee    User?    @relation("TicketAssignee", fields: [assigneeId], references: [id])
+
+  // Entidades filhas que compõem o escopo do chamado.
+  comments    Comment[]
+  attachments Attachment[]
+}
+
+// Entidade de Comentário (Log de interações)
+// Mantém o histórico de comunicação dentro de um chamado específico.
+model Comment {
+  id        String   @id @default(uuid())
+  text      String
+  createdAt DateTime @default(now())
+
+  // Relacionamento obrigatório com o autor do comentário.
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id])
+
+  // Associação obrigatória ao chamado.
+  ticketId  String
+  ticket    Ticket   @relation(fields: [ticketId], references: [id])
+}
+
+// Entidade de Anexo
+// Registra os metadados dos arquivos (ex: imagens e screenshots) enviados para detalhar um chamado.
+model Attachment {
+  id         String   @id @default(uuid())
+  fileName   String
+  filePath   String
+  size       Int      // Tamanho do arquivo armazenado em bytes
+  uploadedAt DateTime @default(now())
+
+  // Associação obrigatória ao chamado ao qual o arquivo pertence.
+  ticketId   String
+  ticket     Ticket   @relation(fields: [ticketId], references: [id])
+}
