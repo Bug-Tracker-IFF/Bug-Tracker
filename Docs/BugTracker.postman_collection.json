@@ -1,0 +1,391 @@
+{
+	"info": {
+		"_postman_id": "f1f8703f-a0c2-4166-ac6d-e1db9eb07baf",
+		"name": "BugTracker",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44462175",
+		"_collection_link": "https://hevertonsouza-5498976.postman.co/workspace/Heverton-Souza's-Workspace~58858986-7601-41eb-8e0d-5080e6e7e5c0/collection/44462175-f1f8703f-a0c2-4166-ac6d-e1db9eb07baf?action=share&source=collection_link&creator=44462175"
+	},
+	"item": [
+		{
+			"name": "Criar Gerente",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Heverton\",\n  \"email\": \"heverton.gerente@empresa.com\",\n  \"password\": \"Heverton123\", \n  \"role\": \"GERENTE\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://upgraded-disco-qw9xjv9r47r25rj-3000.app.github.dev/api/v1/users",
+					"protocol": "https",
+					"host": [
+						"upgraded-disco-qw9xjv9r47r25rj-3000",
+						"app",
+						"github",
+						"dev"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Criar QA",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Maria\",\n  \"email\": \"maria.qa@empresa.com\",\n  \"password\": \"Maria123\",\n  \"role\": \"QA\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://upgraded-disco-qw9xjv9r47r25rj-3000.app.github.dev/api/v1/users",
+					"protocol": "https",
+					"host": [
+						"upgraded-disco-qw9xjv9r47r25rj-3000",
+						"app",
+						"github",
+						"dev"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Criar Projeto",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Sistema de Vendas\",\n  \"description\": \"Novo ERP para a equipe comercial\",\n  \"managerId\": \"new-id-1773717104011\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://upgraded-disco-qw9xjv9r47r25rj-3000.app.github.dev/api/v1/projects",
+					"protocol": "https",
+					"host": [
+						"upgraded-disco-qw9xjv9r47r25rj-3000",
+						"app",
+						"github",
+						"dev"
+					],
+					"path": [
+						"api",
+						"v1",
+						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login Err401",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"maria.qa@empresa.com\",\n  \"password\": \"Maria567\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://upgraded-disco-qw9xjv9r47r25rj-3000.app.github.dev/api/v1/auth/login",
+					"protocol": "https",
+					"host": [
+						"upgraded-disco-qw9xjv9r47r25rj-3000",
+						"app",
+						"github",
+						"dev"
+					],
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"maria.qa@empresa.com\",\n  \"password\": \"Maria123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://upgraded-disco-qw9xjv9r47r25rj-3000.app.github.dev/api/v1/auth/login",
+					"protocol": "https",
+					"host": [
+						"upgraded-disco-qw9xjv9r47r25rj-3000",
+						"app",
+						"github",
+						"dev"
+					],
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Criar Ticket Err400",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"title\": \"Erro na tela de login\",\n  \"description\": \"Ao clicar em entrar, a tela fica em branco e não carrega.\",\n  \"reporterId\": \"new-id-1773713223042\",\n  \"projectId\": \"1234\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://upgraded-disco-qw9xjv9r47r25rj-3000.app.github.dev/api/v1/tickets",
+					"protocol": "https",
+					"host": [
+						"upgraded-disco-qw9xjv9r47r25rj-3000",
+						"app",
+						"github",
+						"dev"
+					],
+					"path": [
+						"api",
+						"v1",
+						"tickets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Criar Ticket",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"title\": \"Erro na tela de login\",\n  \"description\": \"Ao clicar em entrar, a tela fica em branco e não carrega.\",\n  \"reporterId\": \"new-id-1773717135882\",\n  \"projectId\": \"proj-id-1773717123501\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://upgraded-disco-qw9xjv9r47r25rj-3000.app.github.dev/api/v1/tickets",
+					"protocol": "https",
+					"host": [
+						"upgraded-disco-qw9xjv9r47r25rj-3000",
+						"app",
+						"github",
+						"dev"
+					],
+					"path": [
+						"api",
+						"v1",
+						"tickets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ticket Assign",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"assigneeId\": \"new-id-1773717135882\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://upgraded-disco-qw9xjv9r47r25rj-3000.app.github.dev/api/v1/tickets/tick-id-1773717183024/assign",
+					"protocol": "https",
+					"host": [
+						"upgraded-disco-qw9xjv9r47r25rj-3000",
+						"app",
+						"github",
+						"dev"
+					],
+					"path": [
+						"api",
+						"v1",
+						"tickets",
+						"tick-id-1773717183024",
+						"assign"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ticket Update EM_ANDAMENTO",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"newStatus\": \"EM_ANDAMENTO\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://upgraded-disco-qw9xjv9r47r25rj-3000.app.github.dev/api/v1/tickets/tick-id-1773717183024/status",
+					"protocol": "https",
+					"host": [
+						"upgraded-disco-qw9xjv9r47r25rj-3000",
+						"app",
+						"github",
+						"dev"
+					],
+					"path": [
+						"api",
+						"v1",
+						"tickets",
+						"tick-id-1773717183024",
+						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ticket Update PARA_TESTAR",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"newStatus\": \"PARA_TESTAR\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://upgraded-disco-qw9xjv9r47r25rj-3000.app.github.dev/api/v1/tickets/tick-id-1773717183024/status",
+					"protocol": "https",
+					"host": [
+						"upgraded-disco-qw9xjv9r47r25rj-3000",
+						"app",
+						"github",
+						"dev"
+					],
+					"path": [
+						"api",
+						"v1",
+						"tickets",
+						"tick-id-1773717183024",
+						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ticket Update FECHADO",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"newStatus\": \"FECHADO\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://upgraded-disco-qw9xjv9r47r25rj-3000.app.github.dev/api/v1/tickets/tick-id-1773717183024/status",
+					"protocol": "https",
+					"host": [
+						"upgraded-disco-qw9xjv9r47r25rj-3000",
+						"app",
+						"github",
+						"dev"
+					],
+					"path": [
+						"api",
+						"v1",
+						"tickets",
+						"tick-id-1773717183024",
+						"status"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
