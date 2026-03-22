@@ -60,17 +60,23 @@ O arquivo contendo a coleção encontra-se no repositório no seguinte caminho: 
 
 1. No repositório, abra o codespace.
 
-2. Aguarde o contêiner ser construído. No terminal do Codespace, execute as migrações do banco:
+2. Aguarde o contêiner ser construído. No terminal do Codespace, é obrigatório acessar o diretório do backend e instalar as dependências antes de executar qualquer comando:
+```bash
+cd apps/backend
+npm install
+```
+
+3. Em seguida, execute as migrações para criar as tabelas no banco de dados SQLite:
 
 ```bash
 npx prisma migrate dev
 ```
 
-3. Inicie o servidor:
+4. Inicie o servidor:
 ```bash
 npm run dev
 ```
 
-4. Passo fundamental para o Postman: No terminal inferior do VS Code web, clique na aba Ports (Portas). Identifique a porta 3000, clique com o botão direito nela, vá em Port Visibility (Visibilidade da porta) e altere para Public.
+5. Passo fundamental para o Postman: No terminal inferior do VS Code web, clique na aba Ports (Portas). Identifique a porta 3000, clique com o botão direito nela, vá em Port Visibility (Visibilidade da porta) e altere para Public.
 
-5. Copie o endereço gerado (ex: https://<nome-do-codespace>-3000.app.github.dev) e utilize-o como URL base no Postman.
+6. Copie o endereço gerado (ex: https://<nome-do-codespace>-3000.app.github.dev) e utilize-o como URL base no Postman.
