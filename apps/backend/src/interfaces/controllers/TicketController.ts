@@ -4,12 +4,16 @@ import { Request, Response } from 'express';
 import { CreateTicket } from '../../application/use_cases/ticket/CreateTicket';
 import { AssignTicket } from '../../application/use_cases/ticket/AssignTicket';
 import { UpdateTicketStatus } from '../../application/use_cases/ticket/UpdateTicketStatus';
+import { AddComment } from '../../application/use_cases/ticket/AddComment';
+import { AddAttachment } from '../../application/use_cases/ticket/AddAttachment';
 
 export class TicketController {
   constructor(
     private createTicket: CreateTicket,
     private assignTicket: AssignTicket,
-    private updateTicketStatus: UpdateTicketStatus 
+    private updateTicketStatus: UpdateTicketStatus,
+    private addCommentUseCase: AddComment,        
+    private addAttachmentUseCase: AddAttachment  
   ) {}
 
   public async create(req: Request, res: Response): Promise<Response> {
@@ -43,6 +47,32 @@ export class TicketController {
         newStatus: req.body.newStatus
       });
       return res.status(200).json({ message: "Ticket status updated successfully." });
+    } catch (error) {
+      if (error instanceof Error) return res.status(400).json({ error: error.message });
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+  }
+
+  public async addComment(req: Request, res: Response): Promise<Response> {
+    try {
+      await this.addCommentUseCase.execute({ 
+        ticketId: req.params.id as string, 
+        ...req.body 
+      });
+      return res.status(201).json({ message: "Comment added successfully." });
+    } catch (error) {
+      if (error instanceof Error) return res.status(400).json({ error: error.message });
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+  }
+
+  public async addAttachment(req: Request, res: Response): Promise<Response> {
+    try {
+      await this.addAttachmentUseCase.execute({ 
+        ticketId: req.params.id as string, 
+        ...req.body 
+      });
+      return res.status(201).json({ message: "Attachment metadata saved successfully." });
     } catch (error) {
       if (error instanceof Error) return res.status(400).json({ error: error.message });
       return res.status(500).json({ error: "Internal Server Error" });

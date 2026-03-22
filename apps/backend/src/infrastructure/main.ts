@@ -45,6 +45,12 @@ app.post('/api/v1/tickets/:id/assign', (req, res) => ticketController.assign(req
 // Update Ticket Status
 app.patch('/api/v1/tickets/:id/status', (req, res) => ticketController.updateStatus(req, res)); // Usamos PATCH porque atualiza só uma parte
 
+// Add Comment
+app.post('/api/v1/tickets/:id/comments', (req, res) => ticketController.addComment(req, res));
+
+// Add Attachment
+app.post('/api/v1/tickets/:id/attachments', (req, res) => ticketController.addAttachment(req, res));
+
 // Iniciar o servidor
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
