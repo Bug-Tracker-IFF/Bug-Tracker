@@ -4,7 +4,11 @@ import {Request, Response} from 'express';
 import { CreateUser } from '../../application/use_cases/user/CreateUser';
 
 export class UserController {
-    constructor(private createUser: CreateUser) {}
+    private createUser: CreateUser;
+
+    constructor(createUser: CreateUser) {
+        this.createUser = createUser;
+    }
 
     public async create(req: Request, res: Response): Promise<Response> {
         try {

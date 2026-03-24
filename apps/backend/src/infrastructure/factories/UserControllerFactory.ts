@@ -2,7 +2,7 @@
 
 import { PrismaUserRepository } from '../database/repositories/PrismaUserRepository';
 import { CreateUser } from '../../application/use_cases/user/CreateUser';
-import { UserController } from '../../interfaces/controllers/UserController';
+import { UserController } from '../../interfaces/controllers/api/UserController';
 
 export class UserControllerFactory {
   static create(){

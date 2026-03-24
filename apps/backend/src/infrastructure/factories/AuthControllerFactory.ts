@@ -2,7 +2,7 @@
 
 import { PrismaUserRepository } from '../database/repositories/PrismaUserRepository';
 import { AuthenticateUser } from '../../application/use_cases/user/AuthenticateUser';
-import { AuthController } from '../../interfaces/controllers/AuthController';
+import { AuthController } from '../../interfaces/controllers/api/AuthController';
 
 export class AuthControllerFactory {
   static create(): AuthController {

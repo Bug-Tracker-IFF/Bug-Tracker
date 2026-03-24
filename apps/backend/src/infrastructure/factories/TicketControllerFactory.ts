@@ -12,7 +12,7 @@ import { UpdateTicketStatus } from '../../application/use_cases/ticket/UpdateTic
 import { AddComment } from '../../application/use_cases/ticket/AddComment';
 import { AddAttachment } from '../../application/use_cases/ticket/AddAttachment';
 
-import { TicketController } from '../../interfaces/controllers/TicketController';
+import { TicketController } from '../../interfaces/controllers/api/TicketController';
 
 export class TicketControllerFactory {
   static create(): TicketController {

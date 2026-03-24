@@ -3,7 +3,7 @@
 import { PrismaProjectRepository } from '../database/repositories/PrismaProjectRepository';
 import { PrismaUserRepository } from '../database/repositories/PrismaUserRepository';
 import { CreateProject } from '../../application/use_cases/project/CreateProject';
-import { ProjectController } from '../../interfaces/controllers/ProjectController';
+import { ProjectController } from '../../interfaces/controllers/api/ProjectController';
 
 export class ProjectControllerFactory {
   static create(): ProjectController {

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= disciplina.nome %> - Detalhes da Disciplina</title>
+</head>
+<body>
+    <h1><%= disciplina.nome %></h1>
+    <p>Professor: <%= disciplina.professor %></p>
+    <p>Carga Horária: <%= disciplina.cargaHoraria %> horas</p>
+    <p>Descrição: <%= disciplina.descricao %></p>
+
+    <h2>Alunos</h2>
+    <ul>
+        <% disciplina.alunos.forEach(aluno => { %>
+            <li><%= aluno.nome %> - Matrícula: <%= aluno.matricula %></li>
+        <% }); %>
+    </ul>
+</body>
+</html>
