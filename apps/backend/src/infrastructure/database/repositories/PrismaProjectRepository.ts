@@ -35,6 +35,21 @@ export class PrismaProjectRepository implements IProjectRepository {
     return projects.map(p => new Project(p.id, p.name, p.description, p.managerId, p.createdAt));
   }
 
+  async findByUser(userId: string): Promise<Project[] | null> {
+    const projects = await this.prisma.project.findMany({
+      where: {
+        OR: [
+          { managerId: userId },
+          { members: { some: { id: userId } } }
+        ]
+      }
+    });
+
+    if (projects.length === 0) return null;
+
+    return projects.map(p => new Project(p.id, p.name, p.description, p.managerId, p.createdAt));
+  }
+
   async save(project: Project): Promise<Project | null> {
     const createdProject = await this.prisma.project.create({
       data: {

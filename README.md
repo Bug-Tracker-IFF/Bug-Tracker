@@ -58,25 +58,55 @@ O arquivo contendo a coleção encontra-se no repositório no seguinte caminho: 
 
 ## Como executar o projeto localmente
 
-1. No repositório, abra o codespace.
-
-2. Aguarde o contêiner ser construído. No terminal do Codespace, é obrigatório acessar o diretório do backend e instalar as dependências antes de executar qualquer comando:
+1. Clone o repositório ou abra o Codespace na branch correta.
+2. No terminal, caso seja a primeira vez, entre na pasta do backend e instale as dependências:
 ```bash
 cd apps/backend
 npm install
 ```
 
-3. Em seguida, execute as migrações para criar as tabelas no banco de dados SQLite:
-
+3. Em seguida, execute as migrações para criar as tabelas e popular os usuários básicos de teste no banco de dados SQLite:
 ```bash
 npx prisma migrate dev
 ```
 
-4. Inicie o servidor:
+**Dica Extra (Apagar e recriar os dados de teste):** 
+Caso o seu banco fique muito poluído e você queira destruir o banco de dados e recriá-lo do zero incluindo os 3 perfis fictícios novamente (`gerente@bugtracker.com`, `dev@...`, etc com senha `123456`), execute:
+```bash
+npx prisma migrate reset --force
+```
+
+4. Por fim, inicie o servidor:
 ```bash
 npm run dev
 ```
 
-5. Passo fundamental para o Postman: No terminal inferior do VS Code web, clique na aba Ports (Portas). Identifique a porta 3000, clique com o botão direito nela, vá em Port Visibility (Visibilidade da porta) e altere para Public.
+Abra o seu navegador no link local `http://localhost:3000` (ou na port-forwarding do Github Codespaces) para visualizar a interface.
 
-6. Copie o endereço gerado (ex: https://<nome-do-codespace>-3000.app.github.dev) e utilize-o como URL base no Postman.
+---
+
+## Demonstração (Vídeo)
+Para entender de forma objetiva todo o percurso e fluxo de interações deste sistema em formato MVP, veja nosso vídeo de demonstração completo:
+
+▶️ **[Clique aqui para assistir ao Vídeo Mapeando a Aplicação](#link-placeholder)**
+
+---
+
+## Guia de Telas
+Aqui estão as principais interfaces desenvolvidas dinamicamente (SSR) provendo a acessibilidade às funcionalidades do Back-end.
+
+* **Login**:
+  ![Login Screen](Docs/Login.png)
+* **Projects Dashboard**: 
+  ![Projects Dashboard Screen](Docs/projetos.png)
+* **Project Details**:
+  ![Project Details Screen](Docs/detalhe_projeto.png)
+* **Ticket Management**:
+  ![Ticket Management Screen](Docs/Chamado.png)
+
+---
+
+## Release Oficial
+Esta documentação é referida a versão 2.0 (Final) desta aplicação.
+
+📌 [**Release v2.0 - Entrega Final no GitHub**](#link-placeholder-release-v20)

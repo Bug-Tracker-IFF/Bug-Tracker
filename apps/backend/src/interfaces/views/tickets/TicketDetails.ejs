@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html class="light" lang="pt-br">
+<%- include('../partials/head', { title: 'Chamado - Bug Tracker' }) %>
+<body class="bg-background-light font-display text-gray-800 antialiased">
+<div class="relative flex min-h-screen w-full">
+    <!-- Sidebar -->
+    <%- include('../partials/sidebar', { user }) %>
+    
+    <!-- Main Content -->
+    <main class="flex-1 px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+        <div class="mx-auto flex max-w-4xl flex-col gap-6">
+            <div class="flex flex-wrap gap-2">
+                <a class="text-gray-500 text-sm font-medium hover:text-primary" href="/projects/<%= ticket.projectId %>">Voltar para o Projeto</a>
+            </div>
+
+            <% if (typeof error !== 'undefined' && error) { %>
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
+                    <span class="block sm:inline"><%= error %></span>
+                </div>
+            <% } %>
+            <% if (typeof success !== 'undefined' && success) { %>
+                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
+                    <span class="block sm:inline"><%= success %></span>
+                </div>
+            <% } %>
+
+            <div class="bg-white rounded-xl border border-gray-200 p-8 shadow-sm">
+                <div class="flex sm:items-center justify-between flex-col sm:flex-row mb-6 gap-4 border-b pb-6">
+                    <div>
+                        <h1 class="text-gray-900 text-2xl font-bold tracking-tight"><%= ticket.title %></h1>
+                        <p class="text-xs text-gray-500 font-bold mt-1 uppercase">Ticket ID: <%= ticket.id %></p>
+                    </div>
+                    <% 
+                      let statusColor = "bg-gray-100 text-gray-800";
+                      if (ticket.status === 'ABERTO') statusColor = "bg-red-100 text-red-700";
+                      else if (ticket.status === 'EM_ANDAMENTO') statusColor = "bg-blue-100 text-blue-700";
+                      else if (ticket.status === 'RESOLVIDO') statusColor = "bg-green-100 text-green-700";
+                      else if (ticket.status === 'FECHADO') statusColor = "bg-gray-200 text-gray-600";
+                    %>
+                    <div class="inline-flex items-center rounded-full <%= statusColor %> px-4 py-2 text-sm font-bold">
+                        <%= ticket.status %>
+                    </div>
+                </div>
+
+                <div class="mb-8">
+                    <h3 class="text-sm font-bold text-gray-900 mb-2">Descrição</h3>
+                    <div class="p-4 bg-background-light rounded border text-sm text-gray-800 whitespace-pre-wrap"><%= ticket.description %></div>
+                </div>
+
+                <!-- STATE MACHINE ACTIONS -->
+                <% 
+                  const isGerente = user.role === 'GERENTE';
+                  const isOwnerDev = user.role === 'DESENVOLVEDOR' && (!ticket.assigneeId || ticket.assigneeId === user.id);
+                  if (isGerente || isOwnerDev) { 
+                %>
+                <div class="pt-6 border-t font-semibold mb-8">
+                    <h3 class="text-sm font-bold text-gray-900 mb-4">Ações do Chamado</h3>
+                    <div class="flex flex-wrap gap-3">
+                            <% if (ticket.status === 'ABERTO') { %>
+                                <% if (user.role === 'DESENVOLVEDOR') { %>
+                                <form action="/tickets/<%= ticket.id %>/assign" method="POST">
+                                    <button class="bg-blue-600 text-white px-4 py-2 rounded shadow hover:bg-blue-700 transition">Assumir Chamado (Em Andamento)</button>
+                                </form>
+                                <% } %>
+
+                                <% if (user.role === 'GERENTE') { %>
+                                <form action="/tickets/<%= ticket.id %>/assign" method="POST" class="flex flex-wrap gap-2">
+                                    <input type="email" name="assigneeEmail" required placeholder="E-mail do DEV" class="form-input text-sm rounded border border-gray-300 px-3 py-2">
+                                    <button class="bg-blue-600 text-white px-4 py-2 rounded shadow hover:bg-blue-700 transition">Atribuir Chamado (Em Andamento)</button>
+                                </form>
+                                <% } %>
+                            <% } %>
+
+                            <% if (ticket.status === 'EM_ANDAMENTO') { %>
+                                <form action="/tickets/<%= ticket.id %>/status" method="POST">
+                                    <input type="hidden" name="newStatus" value="PARA_TESTAR">
+                                    <button class="bg-yellow-500 text-white px-4 py-2 rounded shadow hover:bg-yellow-600 transition">Enviar para Testes</button>
+                                </form>
+                            <% } %>
+
+                            <% if (ticket.status === 'PARA_TESTAR') { %>
+                                <form action="/tickets/<%= ticket.id %>/status" method="POST">
+                                    <input type="hidden" name="newStatus" value="EM_ANDAMENTO">
+                                    <button class="bg-red-500 text-white px-4 py-2 rounded shadow hover:bg-red-600 transition">Teste Falhou (Voltar Desenvolvimento)</button>
+                                </form>
+                                <form action="/tickets/<%= ticket.id %>/status" method="POST">
+                                    <input type="hidden" name="newStatus" value="FECHADO">
+                                    <button class="bg-green-600 text-white px-4 py-2 rounded shadow hover:bg-green-700 transition">Teste Aprovado (Fechar Chamado)</button>
+                                </form>
+                            <% } %>
+
+                            <% if (ticket.status === 'FECHADO') { %>
+                                <p class="text-gray-500 text-sm">Nenhuma ação disponível. O chamado já está encerrado.</p>
+                            <% } %>
+                    </div>
+                </div>
+                <% } %>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 border-t pt-8">
+                    <!-- COMMENTS SECTION -->
+                    <div>
+                        <h3 class="text-base font-bold text-gray-900 mb-4 flex items-center gap-2"><span class="material-symbols-outlined text-gray-500">forum</span> Comentários</h3>
+                        <div class="space-y-4 mb-6">
+                            <% if (comments && comments.length > 0) { %>
+                                <% comments.forEach(comment => { %>
+                                    <div class="p-3 bg-gray-50 rounded-lg border text-sm">
+                                        <p class="text-xs text-gray-500 mb-1 font-semibold flex justify-between">
+                                            <span><%= comment.authorName ? comment.authorName : 'Autor desconhecido' %></span>
+                                            <span><%= new Date(comment.createdAt).toLocaleDateString('pt-BR') %></span>
+                                        </p>
+                                        <p class="text-gray-800"><%= comment.text %></p>
+                                    </div>
+                                <% }); %>
+                            <% } else { %>
+                                <p class="text-sm text-gray-400 italic">Nenhum comentário.</p>
+                            <% } %>
+                        </div>
+                        
+                        <% if ((user.role === 'DESENVOLVEDOR' || user.role === 'GERENTE' || user.role === 'QA') && ticket.status !== 'FECHADO') { %>
+                            <form action="/tickets/<%= ticket.id %>/comments" method="POST" class="flex flex-col gap-2">
+                                <textarea name="text" rows="3" required placeholder="Adicionar um comentário..." class="form-input text-sm rounded border border-gray-300 w-full p-2"></textarea>
+                                <button class="bg-gray-800 text-white px-4 py-2 rounded text-sm hover:bg-gray-900 self-end">Comentar</button>
+                            </form>
+                        <% } %>
+                    </div>
+
+                    <!-- ATTACHMENTS / LOGS SECTION -->
+                    <div>
+                        <h3 class="text-base font-bold text-gray-900 mb-4 flex items-center gap-2"><span class="material-symbols-outlined text-gray-500">attach_file</span> Logs e Anexos</h3>
+                        <div class="space-y-4 mb-6">
+                            <% if (attachments && attachments.length > 0) { %>
+                                <% attachments.forEach(attachment => { %>
+                                    <div class="p-3 bg-white rounded-lg border border-dashed border-gray-300 text-sm overflow-hidden">
+                                        <p class="text-xs text-gray-500 mb-1">
+                                            <%= new Date(attachment.uploadedAt).toLocaleDateString('pt-BR') %>
+                                        </p>
+                                        <% if (attachment.fileName) { %><p class="text-gray-900 font-bold mb-1"><%= attachment.fileName %></p><% } %>
+                                        <% if (attachment.filePath) { %><p class="text-xs text-blue-600 truncate"><a href="javascript:void(0)" onclick="alert('Caminho Mapeado: <%= attachment.filePath.replace(/\\/g, '\\\\') %>')"><span class="material-symbols-outlined align-middle text-[14px]">link</span> <%= attachment.filePath %></a></p><% } %>
+                                    </div>
+                                <% }); %>
+                            <% } else { %>
+                                <p class="text-sm text-gray-400 italic">Nenhum anexo criado.</p>
+                            <% } %>
+                        </div>
+                        
+                        <% if ((user.role === 'QA' || user.role === 'GERENTE') && ticket.status !== 'FECHADO') { %>
+                            <form action="/tickets/<%= ticket.id %>/attachments" method="POST" class="flex flex-col gap-3 p-4 bg-background-light border rounded" onsubmit="if(!this.fileName.value && !this.filePath.value) { alert('Preencha o log do erro ou informe o caminho do arquivo para adicionar este item.'); return false; }">
+                                <p class="text-xs font-bold text-gray-600">Inserir novo Log ou Anexo</p>
+                                <input name="fileName" type="text" placeholder="Explicação/Log do erro" class="form-input text-sm rounded border border-gray-300 w-full p-2 h-9">
+                                <input name="filePath" type="text" placeholder="Caminho/URL da imagem ou Log físico" class="form-input text-sm rounded border border-gray-300 w-full p-2 h-9">
+                                <button class="bg-primary text-white px-4 py-2 rounded text-sm hover:bg-primary/90 mt-1">Acrescentar ao Relatório</button>
+                            </form>
+                        <% } %>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+</div>
+</body>
+</html>

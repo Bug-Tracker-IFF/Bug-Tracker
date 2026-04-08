@@ -15,13 +15,14 @@ export enum TicketStatus {
     public reporterId: string; // Quem criou (User)
     public projectId: string;  // A qual projeto pertence
     public assigneeId?: string | null; // A quem foi atribuído (opcional)
+    public assigneeName?: string | null; // Nome de quem foi atribuído (opcional, extra)
     public createdAt: Date;
     public updatedAt: Date;
   
     constructor(
       id: string, title: string, description: string, reporterId: string, 
       projectId: string, status?: TicketStatus, assigneeId?: string | null, 
-      createdAt?: Date, updatedAt?: Date
+      createdAt?: Date, updatedAt?: Date, assigneeName?: string | null
     ) {
       if (!title) throw new Error('Ticket title is required');
       if (!reporterId) throw new Error('Ticket must have a reporter');
@@ -34,6 +35,7 @@ export enum TicketStatus {
       this.projectId = projectId;
       this.status = status || TicketStatus.ABERTO;
       this.assigneeId = assigneeId || null;
+      this.assigneeName = assigneeName || null;
       this.createdAt = createdAt || new Date();
       this.updatedAt = updatedAt || new Date();
     }

@@ -5,14 +5,16 @@ import { UserControllerFactory } from './factories/UserControllerFactory';
 import { ProjectControllerFactory } from './factories/ProjectControllerFactory';
 import { TicketControllerFactory } from './factories/TicketControllerFactory';
 import { AuthControllerFactory } from './factories/AuthControllerFactory';
-import { AulaNodeController } from '../interfaces/controllers/views/aulaNodeController';
-import { UserViewControllerFactory } from './factories/UserViewControllerFactory';
+
+import cookieParser from 'cookie-parser';
 
 const app = express();
-const port = 3000;  
+const port = 3000;
 
-// Middleware para entender dados JSON que vêm no corpo da requisição
+// Middleware para entender dados JSON e envio de forms
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // Exemplo do professor de SSR (Server-Side Rendering) com EJS
 app.use(express.static('public')); // Servir arquivos estáticos da pasta 'public'
@@ -30,18 +32,49 @@ const userController = UserControllerFactory.create();
 const projectController = ProjectControllerFactory.create();
 const ticketController = TicketControllerFactory.create();
 const authController = AuthControllerFactory.create();
-const aulaNodeController = new AulaNodeController();
-const userViewController = UserViewControllerFactory.create();
+
+import { AuthViewControllerFactory } from './factories/AuthViewControllerFactory';
+import { ProjectViewControllerFactory } from './factories/ProjectViewControllerFactory';
+import { TicketViewControllerFactory } from './factories/TicketViewControllerFactory';
+
+const authViewController = AuthViewControllerFactory.create();
+const projectViewController = ProjectViewControllerFactory.create();
+const ticketViewController = TicketViewControllerFactory.create();
 
 // ==========================================
 // ROTAS DA APLICAÇÃO
 // ==========================================
 
+// Rota Base
+app.get('/', (req, res) => res.redirect('/login'));
+
+// Autenticação (View UI)
+app.get('/login', (req, res) => authViewController.showLoginForm(req, res));
+app.post('/login', (req, res) => authViewController.login(req, res));
+app.get('/logout', (req, res) => authViewController.logout(req, res));
+
+// View API (SSR)
+// Projetos
+app.get('/projects', (req, res) => projectViewController.list(req, res));
+app.get('/projects/new', (req, res) => projectViewController.createForm(req, res));
+app.post('/projects', (req, res) => projectViewController.create(req, res));
+app.get('/projects/:id', (req, res) => projectViewController.show(req, res));
+app.post('/projects/:id/members', (req, res) => projectViewController.addMember(req, res));
+
+// Chamados (Tickets) Views
+app.get('/projects/:projectId/tickets/new', (req, res) => ticketViewController.createForm(req, res));
+app.post('/projects/:projectId/tickets/new', (req, res) => ticketViewController.create(req, res));
+app.get('/tickets/:id', (req, res) => ticketViewController.show(req, res));
+app.post('/tickets/:id/status', (req, res) => ticketViewController.updateStatus(req, res));
+app.post('/tickets/:id/assign', (req, res) => ticketViewController.assign(req, res));
+app.post('/tickets/:id/comments', (req, res) => ticketViewController.addComment(req, res));
+app.post('/tickets/:id/attachments', (req, res) => ticketViewController.addAttachment(req, res));
+
+// ==========================================
+// REST API ANTIGA (JSON)
+// ==========================================
 // Usuários
 app.post('/api/v1/users', (req, res) => userController.create(req, res));
-// Rotas de visualização (SSR)
-app.get('/usuarios/:id', (req, res) => userViewController.show(req, res));
-app.get('/usuarios', (req, res) => userViewController.list(req, res));
 
 // Projetos
 app.post('/api/v1/projects', (req, res) => projectController.create(req, res));
@@ -63,10 +96,6 @@ app.post('/api/v1/tickets/:id/comments', (req, res) => ticketController.addComme
 
 // Add Attachment
 app.post('/api/v1/tickets/:id/attachments', (req, res) => ticketController.addAttachment(req, res));
-
-
-// Exemplo do professor de SSR (Server-Side Rendering) com EJS
-app.get('/aulaNode', (req, res) => aulaNodeController.renderAulaNodeView(req, res));
 
 // Iniciar o servidor
 app.listen(port, () => {
