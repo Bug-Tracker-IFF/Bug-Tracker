@@ -88,7 +88,7 @@ Abra o seu navegador no link local `http://localhost:3000` (ou na port-forwardin
 ## Demonstração (Vídeo)
 Para entender de forma objetiva todo o percurso e fluxo de interações deste sistema em formato MVP, veja nosso vídeo de demonstração completo:
 
-▶️ **[Clique aqui para assistir ao Vídeo Mapeando a Aplicação](#link-placeholder)**
+▶️ **[Clique aqui para assistir ao Vídeo Mapeando a Aplicação](https://www.youtube.com/watch?v=lK_CPJhhsNE)**
 
 ---
 
@@ -96,7 +96,7 @@ Para entender de forma objetiva todo o percurso e fluxo de interações deste si
 Aqui estão as principais interfaces desenvolvidas dinamicamente (SSR) provendo a acessibilidade às funcionalidades do Back-end.
 
 * **Login**:
-  ![Login Screen](Docs/Login.png)
+  ![Login Screen](Docs/login.png)
 * **Projects Dashboard**: 
   ![Projects Dashboard Screen](Docs/projetos.png)
 * **Project Details**:
