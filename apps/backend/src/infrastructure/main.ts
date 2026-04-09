@@ -36,10 +36,12 @@ const authController = AuthControllerFactory.create();
 import { AuthViewControllerFactory } from './factories/AuthViewControllerFactory';
 import { ProjectViewControllerFactory } from './factories/ProjectViewControllerFactory';
 import { TicketViewControllerFactory } from './factories/TicketViewControllerFactory';
+import { UserViewControllerFactory } from './factories/UserViewControllerFactory';
 
 const authViewController = AuthViewControllerFactory.create();
 const projectViewController = ProjectViewControllerFactory.create();
 const ticketViewController = TicketViewControllerFactory.create();
+const userViewController = UserViewControllerFactory.create();
 
 // ==========================================
 // ROTAS DA APLICAÇÃO
@@ -54,6 +56,14 @@ app.post('/login', (req, res) => authViewController.login(req, res));
 app.get('/logout', (req, res) => authViewController.logout(req, res));
 
 // View API (SSR)
+// Membros
+app.get('/members', (req, res) => userViewController.list(req, res));
+app.get('/members/new', (req, res) => userViewController.createForm(req, res));
+app.post('/members/new', (req, res) => userViewController.create(req, res));
+app.get('/members/:id/edit', (req, res) => userViewController.editForm(req, res));
+app.post('/members/:id/edit', (req, res) => userViewController.update(req, res));
+app.post('/members/:id/delete', (req, res) => userViewController.delete(req, res));
+
 // Projetos
 app.get('/projects', (req, res) => projectViewController.list(req, res));
 app.get('/projects/new', (req, res) => projectViewController.createForm(req, res));

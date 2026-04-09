@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html class="light" lang="pt-br">
+<%- include('../partials/head', { title: member ? 'Editar Membro - Bug Tracker' : 'Criar Membro - Bug Tracker' }) %>
+<body class="bg-background-light font-display text-gray-800 antialiased">
+<div class="relative flex min-h-screen w-full">
+    <!-- Sidebar -->
+    <%- include('../partials/sidebar', { user }) %>
+    
+    <!-- Main Content -->
+    <main class="flex-1 overflow-y-auto">
+        <div class="p-8 mx-auto max-w-4xl">
+            <!-- Breadcrumbs -->
+            <div class="flex gap-2 mb-4 items-center">
+                <a class="text-gray-500 text-sm font-medium hover:text-primary transition-colors" href="/members">Membros</a>
+                <span class="text-gray-400 text-sm font-medium material-symbols-outlined" style="font-size: 16px;">chevron_right</span>
+                <span class="text-gray-900 text-sm font-medium"><%= member ? 'Editar Membro' : 'Novo Membro' %></span>
+            </div>
+
+            <!-- PageHeading -->
+            <div class="mb-8">
+                <p class="text-gray-900 text-3xl font-bold leading-tight tracking-tight">
+                    <%= member ? 'Editar Membro' : 'Adicionar Membro' %>
+                </p>
+            </div>
+            
+            <% if (typeof error !== 'undefined' && error) { %>
+                <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg relative mb-6 shadow-sm">
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-red-500">error</span>
+                        <span class="block sm:inline text-sm font-medium"><%= error %></span>
+                    </div>
+                </div>
+            <% } %>
+
+            <!-- Form Container -->
+            <div class="bg-white rounded-xl border border-gray-200 p-8 shadow-sm">
+                <form action="<%= member ? `/members/${member.id}/edit` : `/members/new` %>" method="POST" class="space-y-6 max-w-xl">
+                    <label class="flex flex-col">
+                        <p class="text-gray-800 text-sm font-medium leading-normal pb-2">Nome Completo</p>
+                        <input name="name" type="text" required value="<%= member ? member.name : '' %>"
+                               class="form-input flex w-full h-12 rounded-lg text-gray-900 border border-gray-300 bg-background-light px-4 text-sm outline-none focus:ring-2 focus:ring-primary/50 transition-shadow" 
+                               placeholder="Ex: João da Silva" />
+                    </label>
+
+                    <label class="flex flex-col">
+                        <p class="text-gray-800 text-sm font-medium leading-normal pb-2">Endereço de E-mail</p>
+                        <input name="email" type="email" required value="<%= member ? member.email : '' %>"
+                               class="form-input flex w-full h-12 rounded-lg text-gray-900 border border-gray-300 bg-background-light px-4 text-sm outline-none focus:ring-2 focus:ring-primary/50 transition-shadow" 
+                               placeholder="Ex: joao@empresa.com" />
+                    </label>
+
+                    <% if (!member) { %>
+                    <label class="flex flex-col">
+                        <p class="text-gray-800 text-sm font-medium leading-normal pb-2">Senha Provisória</p>
+                        <input name="password" type="password" required 
+                               class="form-input flex w-full h-12 rounded-lg text-gray-900 border border-gray-300 bg-background-light px-4 text-sm outline-none focus:ring-2 focus:ring-primary/50 transition-shadow" 
+                               placeholder="Crie uma senha de acesso inicial" />
+                    </label>
+                    <% } %>
+
+                    <label class="flex flex-col">
+                        <p class="text-gray-800 text-sm font-medium leading-normal pb-2">Perfil de Acesso (Role)</p>
+                        <div class="relative">
+                            <select name="role" required class="form-input flex w-full h-12 rounded-lg text-gray-900 border border-gray-300 bg-background-light px-4 text-sm outline-none focus:ring-2 focus:ring-primary/50 cursor-pointer appearance-none">
+                                <option value="DESENVOLVEDOR" <%= member && member.role === 'DESENVOLVEDOR' ? 'selected' : '' %>>Desenvolvedor</option>
+                                <option value="QA" <%= member && member.role === 'QA' ? 'selected' : '' %>>QA / Reportador</option>
+                                <option value="GERENTE" <%= member && member.role === 'GERENTE' ? 'selected' : '' %>>Gerente</option>
+                            </select>
+                            <span class="material-symbols-outlined absolute right-3 top-3 text-gray-400 pointer-events-none">expand_more</span>
+                        </div>
+                    </label>
+
+                    <!-- Action Buttons -->
+                    <div class="flex items-center justify-end gap-4 pt-6 mt-4 border-t border-gray-100">
+                        <a href="/members" class="flex min-w-[84px] items-center justify-center rounded-lg h-10 px-5 bg-slate-100 text-slate-700 text-sm font-bold tracking-wide hover:bg-slate-200 transition-colors">
+                            Cancelar
+                        </a>
+                        <button type="submit" class="flex items-center justify-center rounded-lg h-10 px-6 bg-primary text-white text-sm font-bold tracking-wide hover:bg-primary/90 transition-colors shadow-sm shadow-primary/20 hover:shadow-primary/40">
+                            <%= member ? 'Salvar Alterações' : 'Cadastrar Membro' %>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+</div>
+</body>
+</html>

@@ -103,10 +103,10 @@ Aqui estão as principais interfaces desenvolvidas dinamicamente (SSR) provendo 
   ![Project Details Screen](Docs/detalhe_projeto.png)
 * **Ticket Management**:
   ![Ticket Management Screen](Docs/Chamado.png)
+* **Users Management**:
+  ![Users Management Screen](Docs/Membros.png)
 
 ---
 
 ## Release Oficial
 Esta documentação é referida a versão 2.0 (Final) desta aplicação.
-
-📌 [**Release v2.0 - Entrega Final no GitHub**](#link-placeholder-release-v20)
