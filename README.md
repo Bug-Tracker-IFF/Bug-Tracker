@@ -110,3 +110,4 @@ Aqui estão as principais interfaces desenvolvidas dinamicamente (SSR) provendo 
 
 ## Release Oficial
 Esta documentação é referida a versão 2.0 (Final) desta aplicação.
+📌 [**Release v2.0 - Entrega Final no GitHub**](https://github.com/Bug-Tracker-IFF/Bug-Tracker/releases/tag/v2.0.0-p2)
