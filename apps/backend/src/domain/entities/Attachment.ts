@@ -12,15 +12,8 @@ export class Attachment {
       id: string, fileName: string, filePath: string, size: number, 
       ticketId: string, uploadedAt?: Date
     ) {
-      if (!fileName) throw new Error("File name is required");
-      if (!filePath) throw new Error("File path is required");
+      if (!fileName && !filePath) throw new Error("At least one field (Log or Path) is required.");
       if (!ticketId) throw new Error("Attachment must belong to a ticket");
-  
-      // Validação simples de extensão de imagem (opcional, mas recomendada)
-      const lowerName = fileName.toLowerCase();
-      if (!lowerName.endsWith('.png') && !lowerName.endsWith('.jpg') && !lowerName.endsWith('.jpeg')) {
-          throw new Error("Only image files (.png, .jpg, .jpeg) are allowed");
-      }
   
       this.id = id || "att-id-" + Date.now();
       this.fileName = fileName;

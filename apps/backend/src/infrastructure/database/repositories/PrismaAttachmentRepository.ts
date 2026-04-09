@@ -19,7 +19,14 @@ export class PrismaAttachmentRepository implements IAttachmentRepository {
     return new Attachment(created.id, created.fileName, created.filePath, created.size, created.ticketId, created.uploadedAt);
   }
 
-  async findByTicketId(ticketId: string): Promise<Attachment[] | null> { return null; }
+  async findByTicketId(ticketId: string): Promise<Attachment[] | null> {
+    const attachments = await this.prisma.attachment.findMany({
+      where: { ticketId },
+      orderBy: { uploadedAt: 'desc' }
+    });
+    if (attachments.length === 0) return null;
+    return attachments.map(a => new Attachment(a.id, a.fileName, a.filePath, a.size, a.ticketId, a.uploadedAt));
+  }
   async findById(id: string): Promise<Attachment | null> { return null; }
   async delete(id: string): Promise<boolean> { return true; }
 }

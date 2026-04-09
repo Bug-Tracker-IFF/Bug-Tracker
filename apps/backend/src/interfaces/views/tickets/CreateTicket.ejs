@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html class="light" lang="pt-br">
+<%- include('../partials/head', { title: 'Bug Tracker - Criar Chamado' }) %>
+<body class="bg-background-light font-display text-gray-800 antialiased">
+<div class="relative flex min-h-screen w-full">
+    <!-- Sidebar -->
+    <%- include('../partials/sidebar', { user }) %>
+    
+    <!-- Main Content -->
+    <main class="flex-1 overflow-y-auto">
+        <div class="p-8 mx-auto max-w-4xl">
+            <!-- Breadcrumbs -->
+            <div class="flex gap-2 mb-4">
+                <a class="text-gray-500 text-sm font-medium hover:text-primary" href="/projects">Projetos</a>
+                <span class="text-gray-500 text-sm font-medium">/</span>
+                <a class="text-gray-500 text-sm font-medium hover:text-primary" href="/projects/<%= projectId %>">Projeto Selecionado</a>
+                <span class="text-gray-500 text-sm font-medium">/</span>
+                <span class="text-gray-900 text-sm font-medium">Criar Chamado</span>
+            </div>
+
+            <!-- PageHeading -->
+            <div class="mb-8">
+                <p class="text-gray-900 text-3xl font-bold leading-tight tracking-tight">Criar Novo Chamado</p>
+            </div>
+            
+            <% if (typeof error !== 'undefined' && error) { %>
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
+                    <span class="block sm:inline"><%= error %></span>
+                </div>
+            <% } %>
+
+            <!-- Form Container -->
+            <div class="bg-white rounded-xl border border-gray-200 p-8 space-y-8 shadow-sm">
+                <form action="/projects/<%= projectId %>/tickets/new" method="POST" class="space-y-6">
+                    <label class="flex flex-col">
+                        <p class="text-gray-800 text-sm font-medium leading-normal pb-2">Título do Bug</p>
+                        <input name="title" type="text" required class="form-input flex w-full h-12 rounded-lg border border-gray-300 bg-background-light px-4 text-sm focus:ring-2 focus:ring-primary/50" placeholder="Ex: Falha ao fazer login" />
+                    </label>
+                    <label class="flex flex-col">
+                        <p class="text-gray-800 text-sm font-medium leading-normal pb-2">Descrição detalhada</p>
+                        <textarea name="description" required class="form-input flex w-full min-h-36 rounded-lg border border-gray-300 bg-background-light p-4 text-sm focus:ring-2 focus:ring-primary/50" placeholder="Passos para reproduzir, comportamento esperado, comportamento atual..."></textarea>
+                    </label>
+
+                    <!-- Action Buttons -->
+                    <div class="flex items-center justify-end gap-4 pt-4 border-t border-gray-200">
+                        <a href="/projects/<%= projectId %>" class="flex min-w-[84px] items-center justify-center rounded-lg h-10 px-4 bg-gray-200 text-gray-800 text-sm font-bold hover:bg-gray-300 transition-colors">
+                            Cancelar
+                        </a>
+                        <button type="submit" class="flex min-w-[84px] items-center justify-center rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-colors">
+                            Criar Report
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bug Tracker - Login</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#197fe6",
+              "background-light": "#f6f7f8",
+              "background-dark": "#111921",
+            },
+            fontFamily: {
+              "display": ["Manrope", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+</head>
+<body class="font-display">
+<div class="relative flex h-auto min-h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<div class="flex flex-1 justify-center items-center py-5 px-4 sm:px-6 lg:px-8">
+<div class="layout-content-container flex flex-col w-full max-w-md">
+<div class="flex justify-center items-center mb-6">
+<span class="material-symbols-outlined text-primary text-4xl mr-2">bug_report</span>
+<h1 class="text-3xl font-bold text-gray-800 dark:text-white">Bug Tracker</h1>
+</div>
+<div class="bg-white dark:bg-background-dark/50 border border-gray-200 dark:border-white/10 p-8 rounded-xl shadow-sm">
+<h1 class="text-gray-900 dark:text-white tracking-tight text-2xl font-bold leading-tight text-center pb-6">Log in to your account</h1>
+<div class="flex flex-col gap-y-4">
+<label class="flex flex-col w-full">
+<p class="text-gray-600 dark:text-gray-300 text-sm font-medium leading-normal pb-2">Email</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-gray-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-gray-300 dark:border-gray-700 bg-white dark:bg-background-dark h-12 placeholder:text-gray-400 dark:placeholder:text-gray-500 px-4 text-base font-normal leading-normal" placeholder="Enter your email" value=""/>
+</label>
+<div class="w-full">
+<label class="flex flex-col w-full">
+<div class="flex justify-between items-center pb-2">
+<p class="text-gray-600 dark:text-gray-300 text-sm font-medium leading-normal">Password</p>
+<a class="text-primary text-sm font-medium leading-normal hover:underline" href="#">Forgot Password?</a>
+</div>
+<div class="flex w-full flex-1 items-stretch rounded-lg">
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-gray-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-gray-300 dark:border-gray-700 bg-white dark:bg-background-dark h-12 placeholder:text-gray-400 dark:placeholder:text-gray-500 px-4 rounded-r-none border-r-0 pr-2 text-base font-normal leading-normal" placeholder="Enter your password" type="password" value=""/>
+<div class="text-gray-400 dark:text-gray-500 flex border border-gray-300 dark:border-gray-700 bg-white dark:bg-background-dark items-center justify-center px-3 rounded-r-lg border-l-0">
+<span class="material-symbols-outlined" data-icon="Eye" data-size="24px" data-weight="regular">visibility_off</span>
+</div>
+</div>
+</label>
+</div>
+</div>
+<button class="flex items-center justify-center text-center font-medium text-base h-12 w-full mt-6 rounded-lg bg-primary text-white hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/50 dark:focus:ring-offset-background-dark">Login</button>
+</div>
+<p class="text-gray-600 dark:text-gray-400 text-sm font-normal leading-normal text-center mt-6">
+                        Don't have an account? <a class="font-medium text-primary hover:underline" href="#">Create Account</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+</body></html>

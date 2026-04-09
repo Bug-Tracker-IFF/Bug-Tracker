@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html class="light" lang="pt-br">
+<%- include('../partials/head', { title: 'Bug Tracker - Membros' }) %>
+<body class="font-display">
+<div class="relative flex h-auto min-h-screen w-full bg-background-light overflow-x-hidden">
+    <!-- Sidebar -->
+    <%- include('../partials/sidebar', { user }) %>
+    
+    <!-- Main Content -->
+    <div class="layout-container flex h-full grow flex-col flex-1 px-4 sm:px-6 md:px-10 lg:px-20 py-8">
+        <div class="layout-content-container flex flex-col w-full max-w-6xl mx-auto flex-1">
+            
+            <header class="flex items-center justify-between gap-4 mb-8">
+                <h1 class="text-slate-900 text-4xl font-black leading-tight tracking-tight">Gerenciar Membros</h1>
+                <a href="/members/new" class="flex cursor-pointer items-center justify-center rounded-lg h-10 px-5 bg-primary text-white text-sm font-bold tracking-wide hover:bg-primary/90 transition-colors gap-2 shadow-sm shadow-primary/20 hover:shadow-primary/40">
+                    <span class="material-symbols-outlined text-[20px]">person_add</span>
+                    <span>Novo Membro</span>
+                </a>
+            </header>
+
+            <% if (typeof success !== 'undefined' && success) { %>
+                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
+                    <span class="block sm:inline"><%= success %></span>
+                </div>
+            <% } %>
+            
+            <% if (typeof error !== 'undefined' && error) { %>
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
+                    <span class="block sm:inline"><%= error %></span>
+                </div>
+            <% } %>
+
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                <% if (users && users.length > 0) { %>
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-50 text-slate-600 border-b border-slate-200">
+                                <th class="py-4 px-6 text-sm font-bold">Nome</th>
+                                <th class="py-4 px-6 text-sm font-bold">Email</th>
+                                <th class="py-4 px-6 text-sm font-bold">Papel (Role)</th>
+                                <th class="py-4 px-6 text-sm font-bold text-right">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% users.forEach(member => { %>
+                                <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors">
+                                    <td class="py-4 px-6 text-sm text-slate-900 font-bold"><%= member.name %></td>
+                                    <td class="py-4 px-6 text-sm text-slate-600"><%= member.email %></td>
+                                    <td class="py-4 px-6">
+                                        <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-bold ring-1 ring-inset 
+                                            <%= member.role === 'GERENTE' ? 'bg-purple-50 text-purple-700 ring-purple-600/20' : 
+                                               member.role === 'DESENVOLVEDOR' ? 'bg-blue-50 text-blue-700 ring-blue-600/20' : 
+                                               'bg-emerald-50 text-emerald-700 ring-emerald-600/20' %>">
+                                            <%= member.role %>
+                                        </span>
+                                    </td>
+                                    <td class="py-4 px-6 flex justify-end gap-2">
+                                        <a href="/members/<%= member.id %>/edit" class="flex items-center justify-center h-8 w-8 rounded-full text-slate-500 hover:text-primary hover:bg-primary/10 transition-colors" title="Editar">
+                                            <span class="material-symbols-outlined text-[18px]">edit</span>
+                                        </a>
+                                        <form action="/members/<%= member.id %>/delete" method="POST" class="inline" onsubmit="return confirm('Tem certeza que deseja excluir permanentemente o membro <%= member.name %>?');">
+                                            <button type="submit" class="flex items-center justify-center h-8 w-8 rounded-full text-slate-500 hover:text-red-600 hover:bg-red-50 transition-colors" title="Excluir">
+                                                <span class="material-symbols-outlined text-[18px]">delete</span>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                <% } else { %>
+                    <div class="flex flex-col items-center justify-center py-16 text-slate-500 text-center px-4">
+                        <span class="material-symbols-outlined text-6xl mb-4 text-slate-300">group_off</span>
+                        <p class="text-lg font-bold text-slate-700 mb-2">Nenhum membro encontrado</p>
+                        <p class="text-sm max-w-sm">Cadastre novos membros usando o botão "Novo Membro" para que acessem o Bug Tracker.</p>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

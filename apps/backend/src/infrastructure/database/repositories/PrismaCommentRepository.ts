@@ -18,6 +18,14 @@ export class PrismaCommentRepository implements ICommentRepository {
     return new Comment(created.id, created.text, created.authorId, created.ticketId, created.createdAt);
   }
   
-  async findByTicketId(ticketId: string): Promise<Comment[] | null> { return null; }
+  async findByTicketId(ticketId: string): Promise<Comment[] | null> {
+    const comments = await this.prisma.comment.findMany({
+      where: { ticketId },
+      orderBy: { createdAt: 'desc' },
+      include: { author: true }
+    });
+    if (comments.length === 0) return null;
+    return comments.map(c => new Comment(c.id, c.text, c.authorId, c.ticketId, c.createdAt, c.author ? c.author.name : null));
+  }
   async delete(id: string): Promise<boolean> { return true; }
 }

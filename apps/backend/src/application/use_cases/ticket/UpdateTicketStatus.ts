@@ -13,6 +13,13 @@ export class UpdateTicketStatus {
 
     const currentStatus = ticket.status;
     const nextStatus = input.newStatus;
+    
+    // Security check: Dev restriction
+    if (input.requesterRole === 'DESENVOLVEDOR') {
+      if (ticket.assigneeId && ticket.assigneeId !== input.requesterId) {
+        throw new Error("Permission Denied: Only the assigned developer or manager can change this ticket's status.");
+      }
+    }
 
     // Define quais são as transições permitidas para cada status atual
     const allowedTransitions: Record<TicketStatus, TicketStatus[]> = {

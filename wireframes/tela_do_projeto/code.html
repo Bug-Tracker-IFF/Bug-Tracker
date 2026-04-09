@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bug Tracker - Project Details</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+      }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#197fe6",
+              "background-light": "#f6f7f8",
+              "background-dark": "#111921",
+            },
+            fontFamily: {
+              "display": ["Manrope", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-200">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<main class="flex-1 px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+<div class="mx-auto flex max-w-7xl flex-col gap-8">
+<!-- Breadcrumbs -->
+<div class="flex flex-wrap gap-2">
+<a class="text-gray-500 dark:text-gray-400 text-sm font-medium leading-normal hover:text-primary dark:hover:text-primary" href="#">All Projects</a>
+<span class="text-gray-500 dark:text-gray-400 text-sm font-medium leading-normal">/</span>
+<span class="text-gray-900 dark:text-white text-sm font-medium leading-normal">Orbit - Design System</span>
+</div>
+<!-- Page Heading -->
+<div class="flex flex-col sm:flex-row flex-wrap items-start sm:items-center justify-between gap-4">
+<h1 class="text-gray-900 dark:text-white text-3xl sm:text-4xl font-bold tracking-tight">Orbit - Design System</h1>
+<button class="flex items-center justify-center gap-2 rounded-lg bg-primary h-10 px-4 text-white text-sm font-bold leading-normal tracking-wide shadow-sm hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+<span class="material-symbols-outlined text-base">add</span>
+<span>Create Bug Report</span>
+</button>
+</div>
+<!-- Filters -->
+<div class="flex gap-2 p-1 overflow-x-auto">
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-primary px-4">
+<p class="text-white text-sm font-semibold leading-normal">All</p>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-gray-200 dark:bg-gray-800/50 px-4 hover:bg-gray-300 dark:hover:bg-gray-700/50">
+<p class="text-gray-700 dark:text-gray-300 text-sm font-medium leading-normal">Open</p>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-gray-200 dark:bg-gray-800/50 px-4 hover:bg-gray-300 dark:hover:bg-gray-700/50">
+<p class="text-gray-700 dark:text-gray-300 text-sm font-medium leading-normal">In Progress</p>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-gray-200 dark:bg-gray-800/50 px-4 hover:bg-gray-300 dark:hover:bg-gray-700/50">
+<p class="text-gray-700 dark:text-gray-300 text-sm font-medium leading-normal">For Testing</p>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-gray-200 dark:bg-gray-800/50 px-4 hover:bg-gray-300 dark:hover:bg-gray-700/50">
+<p class="text-gray-700 dark:text-gray-300 text-sm font-medium leading-normal">Closed</p>
+</button>
+</div>
+<!-- Table -->
+<div class="w-full @container">
+<div class="overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-background-dark shadow-sm">
+<div class="overflow-x-auto">
+<table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+<thead class="bg-gray-50 dark:bg-gray-800/50">
+<tr>
+<th class="table-column-title px-6 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider w-[40%]" scope="col">Title</th>
+<th class="table-column-status px-6 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider w-[15%]" scope="col">Status</th>
+<th class="table-column-assignee px-6 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider w-[25%]" scope="col">Assigned Developer</th>
+<th class="table-column-date px-6 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider w-[20%]" scope="col">Creation Date</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/30">
+<td class="table-column-title px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">UI Glitch on Login Screen</td>
+<td class="table-column-status px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-x-1.5 rounded-full bg-red-100 dark:bg-red-900/40 px-2.5 py-1 text-xs font-medium text-red-700 dark:text-red-300">
+<svg aria-hidden="true" class="h-1.5 w-1.5 fill-red-500 dark:fill-red-400" viewbox="0 0 6 6"><circle cx="3" cy="3" r="3"></circle></svg>
+                                                    Open
+                                                </span>
+</td>
+<td class="table-column-assignee px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">Alex Johnson</td>
+<td class="table-column-date px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">2023-10-26</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/30">
+<td class="table-column-title px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">API call fails with 500 error</td>
+<td class="table-column-status px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-x-1.5 rounded-full bg-blue-100 dark:bg-blue-900/40 px-2.5 py-1 text-xs font-medium text-blue-700 dark:text-blue-300">
+<svg aria-hidden="true" class="h-1.5 w-1.5 fill-blue-500 dark:fill-blue-400" viewbox="0 0 6 6"><circle cx="3" cy="3" r="3"></circle></svg>
+                                                    In Progress
+                                                </span>
+</td>
+<td class="table-column-assignee px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">Samantha Bee</td>
+<td class="table-column-date px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">2023-10-25</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/30">
+<td class="table-column-title px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">Button alignment is off on mobile</td>
+<td class="table-column-status px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-x-1.5 rounded-full bg-yellow-100 dark:bg-yellow-900/40 px-2.5 py-1 text-xs font-medium text-yellow-800 dark:text-yellow-300">
+<svg aria-hidden="true" class="h-1.5 w-1.5 fill-yellow-500 dark:fill-yellow-400" viewbox="0 0 6 6"><circle cx="3" cy="3" r="3"></circle></svg>
+                                                    For Testing
+                                                </span>
+</td>
+<td class="table-column-assignee px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">Michael Chen</td>
+<td class="table-column-date px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">2023-10-24</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/30">
+<td class="table-column-title px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">Incorrect data validation on user profile</td>
+<td class="table-column-status px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-x-1.5 rounded-full bg-gray-100 dark:bg-gray-800 px-2.5 py-1 text-xs font-medium text-gray-600 dark:text-gray-300">
+<svg aria-hidden="true" class="h-1.5 w-1.5 fill-gray-500" viewbox="0 0 6 6"><circle cx="3" cy="3" r="3"></circle></svg>
+                                                    Closed
+                                                </span>
+</td>
+<td class="table-column-assignee px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">Emily Carter</td>
+<td class="table-column-date px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">2023-10-22</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<style>
+                            @container(max-width: 768px) { .table-column-assignee, .table-column-date { display: none; } }
+                            @container(max-width: 480px) { .table-column-status { display: none; } }
+                        </style>
+</div>
+<!-- Pagination -->
+<nav aria-label="Pagination" class="flex items-center justify-center p-4">
+<a class="flex h-10 w-10 items-center justify-center rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800" href="#">
+<span class="sr-only">Previous</span>
+<span class="material-symbols-outlined text-lg">chevron_left</span>
+</a>
+<a aria-current="page" class="flex h-10 w-10 items-center justify-center rounded-lg text-sm font-bold bg-primary/20 text-primary dark:bg-primary/30 dark:text-primary-300" href="#">1</a>
+<a class="flex h-10 w-10 items-center justify-center rounded-lg text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800" href="#">2</a>
+<a class="flex h-10 w-10 items-center justify-center rounded-lg text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800" href="#">3</a>
+<span class="flex h-10 w-10 items-center justify-center text-sm font-medium text-gray-600 dark:text-gray-300">...</span>
+<a class="flex h-10 w-10 items-center justify-center rounded-lg text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800" href="#">10</a>
+<a class="flex h-10 w-10 items-center justify-center rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800" href="#">
+<span class="sr-only">Next</span>
+<span class="material-symbols-outlined text-lg">chevron_right</span>
+</a>
+</nav>
+</div>
+</main>
+</div>
+</div>
+</body></html>

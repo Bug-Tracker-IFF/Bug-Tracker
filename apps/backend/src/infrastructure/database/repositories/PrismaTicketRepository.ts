@@ -33,14 +33,16 @@ export class PrismaTicketRepository implements ITicketRepository {
 
   async findByProject(projectId: string): Promise<Ticket[] | null> {
     const tickets = await this.prisma.ticket.findMany({
-      where: { projectId }
+      where: { projectId },
+      include: { assignee: true }
     });
 
     if (tickets.length === 0) return null;
 
     return tickets.map(t => new Ticket(
       t.id, t.title, t.description, t.reporterId, t.projectId, 
-      t.status as TicketStatus, t.assigneeId, t.createdAt, t.updatedAt
+      t.status as TicketStatus, t.assigneeId, t.createdAt, t.updatedAt,
+      t.assignee ? t.assignee.name : null
     ));
   }
 
